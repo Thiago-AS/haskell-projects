@@ -9,7 +9,7 @@ type Prescricao = (Nome,Horario,HorarioProximo)
 type PlanoMedicamento = [Prescricao]
 
 isInList :: Nome -> Medicamentos -> Bool
-isInList med [] = False
+isInList _ [] = False
 isInList med (x:xs) 
  | med == fst x = True
  | otherwise = isInList med xs
@@ -20,7 +20,13 @@ adicionarMedicamento newMed meds
  | otherwise = newMed: meds
 
 removerMedicamento :: Nome -> Medicamentos -> Medicamentos
-removerMedicamento name [] = []
+removerMedicamento _ [] = []
 removerMedicamento name meds
  | isInList name meds = filter (\x -> if fst x /= name then True else False) meds
  | otherwise = meds
+
+consultarMedicamento :: Nome -> Medicamentos -> Medicamento
+consultarMedicamento name meds
+ | isInList name meds = head $ filter (\x -> if fst x == name then True else False) meds   
+ | otherwise = ("", 0)
+
