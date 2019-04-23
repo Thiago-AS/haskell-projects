@@ -43,6 +43,11 @@ tomarMedicamentoSOS name meds
 
 cadastrarAlarmes :: PlanoMedicamento -> Horario
 cadastrarAlarmes [] = []
-cadastrarAlarmes medSqd = sort $ nub $ concat $ [x |(_, x, _) <- medSqd]
+cadastrarAlarmes medSqd = sort $ nub $ concat $ [hour |(_, hour, _) <- medSqd]
+
+listarMedicamentosComprar :: Medicamentos ->  Medicamentos
+listarMedicamentosComprar [] = []
+listarMedicamentosComprar meds = [(name, amnt)| (name, amnt) <- meds, amnt == 0]
+
 
 
