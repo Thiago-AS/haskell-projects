@@ -1,3 +1,5 @@
+import Data.List
+
 type Nome = String
 type Quantidade = Int
 type HorarioProximo = Int
@@ -39,6 +41,8 @@ tomarMedicamentoSOS name meds
  | isInList name meds = map (\x -> if fst x == name then (fst x, snd x - 1) else x) meds
  | otherwise = meds
 
-
+cadastrarAlarmes :: PlanoMedicamento -> Horario
+cadastrarAlarmes [] = []
+cadastrarAlarmes medSqd = sort $ nub $ concat $ [x |(_, x, _) <- medSqd]
 
 
