@@ -20,7 +20,6 @@ adicionarMedicamento newMed meds
  | otherwise = newMed: meds
 
 removerMedicamento :: Nome -> Medicamentos -> Medicamentos
-removerMedicamento _ [] = []
 removerMedicamento name meds
  | isInList name meds = filter (\x -> if fst x /= name then True else False) meds
  | otherwise = meds
@@ -34,6 +33,12 @@ alterarMedicamento :: Medicamento -> Medicamentos -> Medicamentos
 alterarMedicamento newMed meds 
  | isInList (fst newMed) meds = map (\x -> if fst x == fst newMed then newMed else x) meds 
  | otherwise = meds
+
+tomarMedicamentoSOS :: Nome -> Medicamentos -> Medicamentos
+tomarMedicamentoSOS name meds
+ | isInList name meds = map (\x -> if fst x == name then (fst x, snd x - 1) else x) meds
+ | otherwise = meds
+
 
 
 
