@@ -17,6 +17,7 @@ type Preco = Int
 type Farmacia = (Nome,[(Medicamento,Preco)])
 type Mercado = [Farmacia]
 type Compra = (Preco, Nome)
+type CompraFlex = (Preco, Nome, Medicamentos)
 
 isInList :: Nome -> Medicamentos -> Bool
 isInList _ [] = False
@@ -97,3 +98,14 @@ isAllInList meds drugStock = (length avaibleMeds == length meds, foldl (+) 0 (ma
 
 comprarMedicamentosPreco :: Medicamentos -> Mercado -> Compra
 comprarMedicamentosPreco meds market = minimumBy (comparing fst) [ (snd boolPrice, fst drugStore) | drugStore <- market, let boolPrice = isAllInList meds (snd drugStore), fst boolPrice]
+
+-- QUESTÃO EXTRA 1
+
+parse :: Nome -> [(Compra,Medicamento)] -> CompraFlex
+parse name list = ( foldl (+) 0 (map (\x -> fst (fst x)) filterList) ,name, map (snd) filterList) where 
+ filterList = filter (\x -> snd (fst x) == name) list
+
+comprarMedicamentosPrecoFlex :: Medicamentos -> Mercado -> [CompraFlex]
+comprarMedicamentosPrecoFlex meds market = filter (\(amnt,_,_) -> amnt /= 0 ) [parse name lowestPrices | (name, _) <- market] where
+ lowestPrices = [ (comprarMedicamentosPreco [med] market, med) | med <- meds]
+
