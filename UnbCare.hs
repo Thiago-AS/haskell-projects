@@ -49,5 +49,12 @@ listarMedicamentosComprar :: Medicamentos ->  Medicamentos
 listarMedicamentosComprar [] = []
 listarMedicamentosComprar meds = [(name, amnt)| (name, amnt) <- meds, amnt == 0]
 
+comprarMedicamentosDias ::  PlanoMedicamento -> Medicamentos -> Int -> Medicamentos
+comprarMedicamentosDias medSqd meds days = [ (name1, if totalAmnt < 0 then 0 else totalAmnt) | (name1, hours, _) <- medSqd ,(name2,amnt) <- meds, let totalAmnt = (length hours * days - amnt), name1 == name2]
+
+
+
+
+
 
 
